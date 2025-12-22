@@ -121,12 +121,12 @@ fresh_install() {
 
     # Step 4: Run Official Blueprint Installer
     print_header "Running Official Blueprint Installer"
-    if [ ! -f "install.sh" ]; then
-        print_error "install.sh not found in release. Manual installation may be required."
+    if [ ! -f "blueprint.sh" ]; then
+        print_error "blueprint.sh not found in release. Manual installation may be required."
         return 1
     fi
-    chmod +x install.sh
-    bash install.sh
+    chmod +x blueprint.sh
+    bash blueprint.sh
 
     print_success "Blueprint Framework installed successfully!"
     print_status "You can now use the 'blueprint' command in /var/www/pterodactyl"
