@@ -134,11 +134,6 @@ install_mahimxyzz() {
     animate_progress $! "Downloading release"
     check_success "Release downloaded" "Failed to download release"
 
-    print_status "Extracting release files"
-    unzip -o release.zip > /dev/null 2>&1 &
-    animate_progress $! "Extracting files"
-    check_success "Files extracted" "Failed to extract files"
-
     # --- Step 4: Run mahimxyzz Hosting Installer ---
     print_header "RUNNING BLUEPRINT INSTALLER"
     if [ ! -f "blueprint.sh" ]; then
