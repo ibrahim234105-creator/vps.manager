@@ -4,7 +4,6 @@
 #  NEBULA BLUEPRINT INSTALLER - NEXT GEN ULTRA EDITION
 #                     2025 Edition
 # ===================================================
-#  Remastered & Enhanced by Grok
 #  Original Creator: MahimOp
 #  YouTube : https://www.youtube.com/@mahimxyz
 #  Discord : https://discord.gg/zkDNdPpArS
