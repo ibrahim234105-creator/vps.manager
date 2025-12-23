@@ -32,10 +32,12 @@ NEON_PURPLE="\e[38;5;165m"
 NEON_BLUE="\e[38;5;75m"
 GLOW="\e[38;5;51m"
 
+DANGER="\e[38;5;196m"
+
 clear
 
 # Epic Header Animation
-echo -e "${NEON_BLUE}"
+echo -e "${DANGER}"
 cat << "EOF"
  ___      ___       __       __    __   __     ___      ___ 
 |"  \    /"  |     /""\     /" |  | "\ |" \   |"  \    /"  |
@@ -49,7 +51,6 @@ cat << "EOF"
                                                      
 EOF
 echo -e "${NEON_PURPLE}${BOLD}               NEXT GEN ULTRA EDITION - 2025${RESET}"
-echo -e "${NEON_GREEN}          Powered by Cutting-Edge Automation${RESET}"
 echo -e "${DIM}      Original Creator: ${BOLD}MahimOp${RESET} ${DIM}| YouTube: @mahimxyz${RESET}"
 echo -e "${DIM}      Discord: https://discord.gg/zkDNdPpArS${RESET}"
 echo -e "${NEON_BLUE}══════════════════════════════════════════════════════════${RESET}\n"
