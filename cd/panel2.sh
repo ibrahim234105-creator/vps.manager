@@ -93,10 +93,15 @@ OS=$(lsb_release -is | tr '[:upper:]' '[:lower:]')
 CODENAME=$(lsb_release -cs)
 progress "Detected OS: ${BOLD}${OS^} ($CODENAME)${RESET}"
 
-# PHP Repository
-progress "Adding latest PHP repository (Ondřej Surý)..."
-curl -sSL https://packages.sury.org/php/apt.gpg | gpg --dearmor -o /usr/share/keyrings/ondrej-php.gpg
-echo "deb [signed-by=/usr/share/keyrings/ondrej-php.gpg] https://packages.sury.org/php/ $CODENAME main" > /etc/apt/sources.list.d/ondrej-php.list
+# PHP Repository (from first script - reliable)
+if [[ "$OS" == "ubuntu" ]]; then
+    progress "Adding PPA for PHP (Ondřej)..."
+    LC_ALL=C.UTF-8 add-apt-repository -y ppa:ondrej/php
+elif [[ "$OS" == "debian" ]]; then
+    progress "Adding SURY PHP repo manually..."
+    curl -fsSL https://packages.sury.org/php/apt.gpg | gpg --dearmor -o /usr/share/keyrings/sury-php.gpg
+    echo "deb [signed-by=/usr/share/keyrings/sury-php.gpg] https://packages.sury.org/php/ $CODENAME main" > /etc/apt/sources.list.d/sury-php.list
+fi
 
 # Redis Repository
 progress "Adding official Redis repository..."
@@ -113,7 +118,7 @@ apt install -y \
 
 success "Core packages installed!"
 
-# Secure MariaDB (Modern Non-Interactive Way)
+# Secure MariaDB
 progress "Securing MariaDB installation..."
 sudo mariadb-secure-installation <<EOF
 
@@ -125,7 +130,7 @@ y
 EOF
 success "MariaDB secured!"
 
-# Database Setup
+# Database Setup (safe with socket auth)
 progress "Creating Pterodactyl database & user..."
 sudo mariadb << EOF
 CREATE DATABASE IF NOT EXISTS ${DB_NAME};
@@ -147,11 +152,12 @@ curl -Lo panel.tar.gz https://github.com/pterodactyl/panel/releases/latest/downl
 tar -xzvf panel.tar.gz && rm panel.tar.gz
 chmod -R 755 storage/* bootstrap/cache
 
-# Environment Setup
+# Environment Setup (correct URL from first script)
 progress "Configuring .env file..."
-if [ ! -f ".env" ]; then
-    curl -sLo .env https://github.com/pterodactyl/panel/raw/stable/.env.example
+if [ ! -f ".env.example" ]; then
+    curl -Lo .env.example https://raw.githubusercontent.com/pterodactyl/panel/develop/.env.example
 fi
+cp .env.example .env
 
 sed -i \
     -e "s|APP_URL=.*|APP_URL=https://${DOMAIN}|g" \
@@ -186,7 +192,7 @@ systemctl enable --now cron
 (crontab -l 2>/dev/null; echo "* * * * * php /var/www/pterodactyl/artisan schedule:run >> /dev/null 2>&1") | crontab -
 success "Permissions & cron job set!"
 
-# SSL Certificate
+# SSL Certificate (self-signed)
 progress "Generating self-signed SSL certificate..."
 mkdir -p /etc/ssl/pterodactyl
 openssl req -x509 -nodes -days 3650 -newkey rsa:4096 \
@@ -195,7 +201,7 @@ openssl req -x509 -nodes -days 3650 -newkey rsa:4096 \
     -subj "/CN=${DOMAIN}" > /dev/null 2>&1
 success "SSL ready (self-signed)"
 
-# Nginx Config
+# Nginx Config (fixed fastcgi_pass)
 progress "Configuring Nginx with optimized settings..."
 cat > /etc/nginx/sites-available/pterodactyl.conf << EOF
 server {
@@ -222,7 +228,8 @@ server {
     }
 
     location ~ \.php$ {
-        fastcgi_pass unix:/run/php/php${PHP_VERSION}-fpm.sock;
+        fastcgi_split_path_info ^(.+\.php)(/.+)\$;
+        fastcgi_pass unix:/run/php/php8.3-fpm.sock;
         fastcgi_index index.php;
         include fastcgi_params;
         fastcgi_param SCRIPT_FILENAME \$document_root\$fastcgi_script_name;
