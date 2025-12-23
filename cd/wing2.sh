@@ -1,23 +1,25 @@
 #!/bin/bash
 set -e
 
-# Colors for output (Modern dark-theme inspired palette)
-RED='\033[0;91m'
-GREEN='\033[0;92m'
-YELLOW='\033[1;93m'
-BLUE='\033[0;94m'
-PURPLE='\033[0;95m'
-CYAN='\033[0;96m'
-WHITE='\033[1;97m'
-GRAY='\033[0;90m'
+# Colors for output (Refreshed modern theme: Nord-inspired with better contrast)
+RED='\033[0;31m'          # Bright Red
+GREEN='\033[0;32m'        # Bright Green
+YELLOW='\033[1;33m'       # Bright Yellow
+BLUE='\033[0;34m'         # Bright Blue
+PURPLE='\033[0;35m'       # Bright Purple
+CYAN='\033[0;36m'         # Bright Cyan
+WHITE='\033[1;37m'        # Bright White
+GRAY='\033[0;37m'         # Light Gray
+DARK_GRAY='\033[1;30m'    # Bold Dark Gray
 BOLD='\033[1m'
-NC='\033[0m' # No Color
+NC='\033[0m'              # No Color
 
-# Background accents (optional, for highlights)
-BG_BLUE='\033[44m'
-BG_PURPLE='\033[45m'
+# Backgrounds (subtle accents)
+BG_BLUE='\033[48;5;17m'   # Dark blue background (Nord frost)
+BG_PURPLE='\033[48;5;53m' # Dark purple background
+BG_CYAN='\033[48;5;24m'   # Subtle cyan for highlights
 
-# Function to print section headers (modern style)
+# Function to print section headers (clean modern style)
 print_header() {
     echo -e "\n${BG_BLUE}${WHITE}${BOLD}══════════════════════════════════════════════════════════${NC}"
     echo -e "${BG_PURPLE}${WHITE}${BOLD}  $1  ${NC}"
@@ -28,17 +30,14 @@ print_header() {
 print_status() {
     echo -e "${YELLOW}${BOLD}⏳ $1...${NC}"
 }
-
 print_success() {
     echo -e "${GREEN}${BOLD}✅ $1${NC}"
 }
-
 print_error() {
     echo -e "${RED}${BOLD}❌ $1${NC}"
 }
-
 print_info() {
-    echo -e "${CYAN}${BOLD}ℹ️ $1${NC}"
+    echo -e "${CYAN}${BOLD}ℹ️  $1${NC}"
 }
 
 # Function to check if command succeeded
@@ -55,12 +54,11 @@ check_success() {
 # Clear screen and show welcome message
 clear
 echo -e "${BG_BLUE}${WHITE}${BOLD}══════════════════════════════════════════════════════════${NC}"
-echo -e "${BG_PURPLE}${WHITE}${BOLD}          PTERODACTYL WINGS SETUP SCRIPT                  ${NC}"
-echo -e "${BG_PURPLE}${WHITE}${BOLD}                by MahimOp                                ${NC}"
+echo -e "${BG_PURPLE}${WHITE}${BOLD}        PTERODACTYL WINGS SETUP SCRIPT         ${NC}"
+echo -e "${BG_PURPLE}${WHITE}${BOLD}               by MahimOp                     ${NC}"
 echo -e "${BG_BLUE}${WHITE}${BOLD}══════════════════════════════════════════════════════════${NC}\n"
 
-print_info "Original script by MahimOp"
-print_info "Theme refresh & credits added by Grok (xAI) - December 2025"
+print_info "Discord: https://discord.gg/EHBvzYbh57"  # <-- Replace with your actual Discord link
 
 # Check if running as root
 if [ "$EUID" -ne 0 ]; then
@@ -106,10 +104,10 @@ check_success "Directory created" "Failed to create directory"
 
 print_status "Detecting system architecture"
 ARCH=$(uname -m)
-if [ "$ARCH" == "x86_64" ]; then 
+if [ "$ARCH" == "x86_64" ]; then
     ARCH="amd64"
     print_success "Detected AMD64 architecture"
-else 
+else
     ARCH="arm64"
     print_success "Detected ARM64 architecture"
 fi
@@ -169,8 +167,8 @@ cd /etc/certs/wing || exit
 
 print_status "Generating self-signed SSL certificate"
 sudo openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 \
--subj "/C=NA/ST=NA/L=NA/O=NA/CN=Generic SSL Certificate" \
--keyout privkey.pem -out fullchain.pem > /dev/null 2>&1
+  -subj "/C=NA/ST=NA/L=NA/O=NA/CN=Generic SSL Certificate" \
+  -keyout privkey.pem -out fullchain.pem > /dev/null 2>&1
 check_success "SSL certificate generated" "Failed to generate SSL certificate"
 
 # ------------------------
@@ -180,16 +178,19 @@ print_header "CREATING WING HELPER COMMAND"
 print_status "Installing helper script"
 sudo tee /usr/local/bin/wing > /dev/null <<'EOF'
 #!/bin/bash
-echo -e "\033[1;95m╔══════════════════════════════════════════╗\033[0m"
-echo -e "\033[1;95m║        Wings Helper Command              ║\033[0m"
-echo -e "\033[1;95m╚══════════════════════════════════════════╝\033[0m"
-echo -e "\033[1;96mTo start Wings:\033[0m          \033[1;32msudo systemctl start wings\033[0m"
-echo -e "\033[1;96mCheck status:\033[0m           \033[1;32msudo systemctl status wings\033[0m"
-echo -e "\033[1;96mView live logs:\033[0m         \033[1;32msudo journalctl -u wings -f\033[0m"
-echo -e "\033[1;93m⚠️  Ensure port 8080 → 443 is mapped in your node config!\033[0m"
+echo -e "\033[1;35m╔══════════════════════════════════════════╗\033[0m"
+echo -e "\033[1;35m║          Wings Helper Command            ║\033[0m"
+echo -e "\033[1;35m╚══════════════════════════════════════════╝\033[0m"
+echo
+echo -e "\033[1;36mTo start Wings:\033[0m          \033[1;32msudo systemctl start wings\033[0m"
+echo -e "\033[1;36mCheck status:\033[0m           \033[1;32msudo systemctl status wings\033[0m"
+echo -e "\033[1;36mView live logs:\033[0m         \033[1;32msudo journalctl -u wings -f\033[0m"
+echo
+echo -e "\033[1;33m⚠️  Ensure port 8080 → 443 is mapped in your node config!\033[0m"
+echo
+echo -e "\033[1;34mDiscord Support: https://discord.gg/your-discord-invite-link\033[0m"
 echo
 EOF
-
 sudo chmod +x /usr/local/bin/wing
 check_success "Helper command 'wing' created" "Failed to create helper"
 
@@ -198,7 +199,6 @@ check_success "Helper command 'wing' created" "Failed to create helper"
 # ------------------------
 print_header "INSTALLATION COMPLETED SUCCESSFULLY"
 echo -e "${GREEN}${BOLD}🎉 Pterodactyl Wings is now fully installed!${NC}\n"
-
 echo -e "${WHITE}${BOLD}📋 Next Steps:${NC}"
 echo -e " ${CYAN}•${NC} Configure Wings using the auto-config option below or manually"
 echo -e " ${CYAN}•${NC} Start the service: ${GREEN}sudo systemctl start wings${NC}"
@@ -211,9 +211,7 @@ echo -e "${PURPLE}${BOLD}🔧 OPTIONAL: AUTO-CONFIGURE WINGS${NC}"
 read -p "$(echo -e "${YELLOW}Would you like to auto-configure Wings now? (y/N): ${NC}")" AUTO_CONFIG
 if [[ "$AUTO_CONFIG" =~ ^[Yy]$ ]]; then
     print_header "AUTO-CONFIGURING WINGS"
-
     echo -e "${YELLOW}Please enter the details from your Pterodactyl Panel → Nodes → Configuration:${NC}\n"
-
     read -p "$(echo -e "${CYAN}Node UUID: ${NC}")" UUID
     read -p "$(echo -e "${CYAN}Token ID: ${NC}")" TOKEN_ID
     read -p "$(echo -e "${CYAN}Token: ${NC}")" TOKEN
@@ -249,18 +247,18 @@ CFG
 
     echo -e "\n${GREEN}${BOLD}✅ Auto-configuration complete!${NC}"
     echo -e "${YELLOW}Check status:${NC} ${GREEN}systemctl status wings${NC}"
-    echo -e "${YELLOW}Follow logs:${NC}   ${GREEN}journalctl -u wings -f${NC}\n"
+    echo -e "${YELLOW}Follow logs:${NC} ${GREEN}journalctl -u wings -f${NC}\n"
 else
     echo -e "\n${YELLOW}⚠️ Auto-configuration skipped.${NC}"
     echo -e "${YELLOW}Manual steps:${NC}"
-    echo -e "  1. Create/edit ${GREEN}/etc/pterodactyl/config.yml${NC} with your node details"
-    echo -e "  2. Start Wings: ${GREEN}sudo systemctl start wings${NC}\n"
+    echo -e " 1. Create/edit ${GREEN}/etc/pterodactyl/config.yml${NC} with your node details"
+    echo -e " 2. Start Wings: ${GREEN}sudo systemctl start wings${NC}\n"
     echo -e "Run ${GREEN}wing${NC} anytime for quick commands.\n"
 fi
 
 # Final footer
 echo -e "${BG_BLUE}${WHITE}${BOLD}══════════════════════════════════════════════════════════${NC}"
-echo -e "${PURPLE}${BOLD}          Thank you for using this script!                 ${NC}"
-echo -e "${CYAN}${BOLD}      Original by MahimOp   ${NC}"
-echo -e "${BG_BLUE}${WHITE}${BOLD}══════════════════════════════════════════════════════════${NC}"
-echo -e ""
+echo -e "${BG_PURPLE}${WHITE}${BOLD}           Thank you for using this script!           ${NC}"
+echo -e "${CYAN}${BOLD}       Author: MahimOp                                ${NC}"
+echo -e "${CYAN}${BOLD}       Discord: https://discord.gg/your-discord-invite-link       ${NC}"
+echo -e "${BG_BLUE}${WHITE}${BOLD}══════════════════════════════════════════════════════════${NC}\n"
