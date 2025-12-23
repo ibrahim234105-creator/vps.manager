@@ -32,10 +32,6 @@ NEON_PURPLE="\e[38;5;165m"
 NEON_BLUE="\e[38;5;75m"
 GLOW="\e[38;5;51m"
 
-# Backgrounds (optional)
-BG_CYAN="\e[46m"
-BG_PURPLE="\e[45m"
-
 clear
 
 # Epic Header Animation
@@ -117,19 +113,21 @@ apt install -y \
 
 success "Core packages installed!"
 
-# Secure MariaDB
+# Secure MariaDB (Modern Non-Interactive Way)
 progress "Securing MariaDB installation..."
-mysql << EOF
-UPDATE mysql.user SET Password=PASSWORD('$(openssl rand -base64 16)') WHERE User='root';
-DELETE FROM mysql.user WHERE User='';
-DELETE FROM mysql.user WHERE User='root' AND Host NOT IN ('localhost', '127.0.0.1', '::1');
-DROP DATABASE IF EXISTS test;
-FLUSH PRIVILEGES;
+sudo mariadb-secure-installation <<EOF
+
+n
+y
+y
+y
+y
 EOF
+success "MariaDB secured!"
 
 # Database Setup
 progress "Creating Pterodactyl database & user..."
-mysql << EOF
+sudo mariadb << EOF
 CREATE DATABASE IF NOT EXISTS ${DB_NAME};
 CREATE USER IF NOT EXISTS '${DB_USER}'@'127.0.0.1' IDENTIFIED BY '${DB_PASS}';
 GRANT ALL PRIVILEGES ON ${DB_NAME}.* TO '${DB_USER}'@'127.0.0.1';
@@ -152,17 +150,23 @@ chmod -R 755 storage/* bootstrap/cache
 # Environment Setup
 progress "Configuring .env file..."
 if [ ! -f ".env" ]; then
-    curl -sLo .env https://raw.githubusercontent.com/pterodactyl/panel/stable/.env.example
+    curl -sLo .env https://github.com/pterodactyl/panel/raw/stable/.env.example
 fi
 
 sed -i \
     -e "s|APP_URL=.*|APP_URL=https://${DOMAIN}|g" \
+    -e "s|DB_HOST=.*|DB_HOST=127.0.0.1|g" \
+    -e "s|DB_PORT=.*|DB_PORT=3306|g" \
     -e "s|DB_DATABASE=.*|DB_DATABASE=${DB_NAME}|g" \
     -e "s|DB_USERNAME=.*|DB_USERNAME=${DB_USER}|g" \
     -e "s|DB_PASSWORD=.*|DB_PASSWORD=${DB_PASS}|g" \
+    -e "s|APP_ENV=.*|APP_ENV=production|g" \
+    -e "s|APP_DEBUG=.*|APP_DEBUG=false|g" \
     .env
 
-echo "APP_ENVIRONMENT_ONLY=false" >> .env
+if ! grep -q "^APP_ENVIRONMENT_ONLY=" .env; then
+    echo "APP_ENVIRONMENT_ONLY=false" >> .env
+fi
 success ".env configured!"
 
 # Composer Dependencies
@@ -287,7 +291,7 @@ echo -e "   ${BOLD}Username:${RESET} ${WHITE}${DB_USER}${RESET}"
 echo -e "   ${BOLD}Password:${RESET} ${WHITE}${DB_PASS}${RESET}\n"
 
 warning "For production: Replace self-signed cert with Let's Encrypt (certbot)"
-echo -e "${DIM}Tip: Use Certbot for free trusted SSL → sudo apt install certbot python3-certbot-nginx${RESET}\n"
+echo -e "${DIM}Tip: sudo apt install certbot python3-certbot-nginx && sudo certbot --nginx -d ${DOMAIN}${RESET}\n"
 
 echo -e "${NEON_GREEN}${BOLD}Original Credits: MahimOp${RESET}"
 echo -e "${DIM}YouTube: https://www.youtube.com/@mahimxyz${RESET}"
