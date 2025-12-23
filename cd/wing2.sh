@@ -1,32 +1,30 @@
 #!/bin/bash
 set -e
 
-# Colors for output (Refreshed modern theme: Nord-inspired with better contrast)
-RED='\033[0;31m'          # Bright Red
-GREEN='\033[0;32m'        # Bright Green
-YELLOW='\033[1;33m'       # Bright Yellow
-BLUE='\033[0;34m'         # Bright Blue
-PURPLE='\033[0;35m'       # Bright Purple
-CYAN='\033[0;36m'         # Bright Cyan
-WHITE='\033[1;37m'        # Bright White
-GRAY='\033[0;37m'         # Light Gray
-DARK_GRAY='\033[1;30m'    # Bold Dark Gray
+# Colors for output (Nord-inspired theme with full bright colors for better visibility)
+RED='\033[0;91m'          # Bright Red
+GREEN='\033[0;92m'        # Bright Green
+YELLOW='\033[1;93m'       # Bright Yellow
+BLUE='\033[0;94m'         # Bright Blue
+PURPLE='\033[0;95m'       # Bright Purple
+CYAN='\033[0;96m'         # Bright Cyan
+WHITE='\033[1;97m'        # Bright White
+GRAY='\033[0;90m'         # Bright Gray
 BOLD='\033[1m'
 NC='\033[0m'              # No Color
 
-# Backgrounds (subtle accents)
-BG_BLUE='\033[48;5;17m'   # Dark blue background (Nord frost)
+# Backgrounds (subtle but visible accents)
+BG_BLUE='\033[48;5;17m'   # Dark blue background
 BG_PURPLE='\033[48;5;53m' # Dark purple background
-BG_CYAN='\033[48;5;24m'   # Subtle cyan for highlights
 
-# Function to print section headers (clean modern style)
+# Function to print section headers
 print_header() {
     echo -e "\n${BG_BLUE}${WHITE}${BOLD}══════════════════════════════════════════════════════════${NC}"
     echo -e "${BG_PURPLE}${WHITE}${BOLD}  $1  ${NC}"
     echo -e "${BG_BLUE}${WHITE}${BOLD}══════════════════════════════════════════════════════════${NC}\n"
 }
 
-# Function to print status messages
+# Status messages with full bright colors
 print_status() {
     echo -e "${YELLOW}${BOLD}⏳ $1...${NC}"
 }
@@ -40,7 +38,7 @@ print_info() {
     echo -e "${CYAN}${BOLD}ℹ️  $1${NC}"
 }
 
-# Function to check if command succeeded
+# Check command success
 check_success() {
     if [ $? -eq 0 ]; then
         print_success "$1"
@@ -51,16 +49,17 @@ check_success() {
     fi
 }
 
-# Clear screen and show welcome message
+# Welcome banner
 clear
 echo -e "${BG_BLUE}${WHITE}${BOLD}══════════════════════════════════════════════════════════${NC}"
 echo -e "${BG_PURPLE}${WHITE}${BOLD}        PTERODACTYL WINGS SETUP SCRIPT         ${NC}"
 echo -e "${BG_PURPLE}${WHITE}${BOLD}               by MahimOp                     ${NC}"
 echo -e "${BG_BLUE}${WHITE}${BOLD}══════════════════════════════════════════════════════════${NC}\n"
 
-print_info "Discord: https://discord.gg/EHBvzYbh57"  # <-- Replace with your actual Discord link
+print_info "Script created and maintained by MahimOp"
+print_info "Discord: https://discord.gg/your-discord-invite-link"  # <-- Replace with your actual link
 
-# Check if running as root
+# Root check
 if [ "$EUID" -ne 0 ]; then
     print_error "Please run this script as root or with sudo"
     exit 1
@@ -68,9 +67,7 @@ fi
 
 print_header "STARTING WINGS INSTALLATION PROCESS"
 
-# ------------------------
-# 1. Docker install (stable)
-# ------------------------
+# 1. Docker install
 print_header "INSTALLING DOCKER"
 print_status "Installing Docker"
 curl -sSL https://get.docker.com/ | CHANNEL=stable bash > /dev/null 2>&1
@@ -80,9 +77,7 @@ print_status "Enabling and starting Docker service"
 sudo systemctl enable --now docker > /dev/null 2>&1
 check_success "Docker service started and enabled" "Failed to start Docker service"
 
-# ------------------------
 # 2. Update GRUB
-# ------------------------
 print_header "UPDATING SYSTEM CONFIGURATION"
 GRUB_FILE="/etc/default/grub"
 if [ -f "$GRUB_FILE" ]; then
@@ -91,12 +86,10 @@ if [ -f "$GRUB_FILE" ]; then
     sudo update-grub > /dev/null 2>&1
     check_success "GRUB configuration updated" "Failed to update GRUB"
 else
-    print_status "GRUB configuration file not found, skipping"
+    print_info "GRUB configuration file not found, skipping"
 fi
 
-# ------------------------
 # 3. Wings install
-# ------------------------
 print_header "INSTALLING WINGS"
 print_status "Creating Pterodactyl directory"
 sudo mkdir -p /etc/pterodactyl
@@ -107,9 +100,12 @@ ARCH=$(uname -m)
 if [ "$ARCH" == "x86_64" ]; then
     ARCH="amd64"
     print_success "Detected AMD64 architecture"
-else
+elif [ "$ARCH" == "aarch64" ]; then
     ARCH="arm64"
     print_success "Detected ARM64 architecture"
+else
+    print_error "Unsupported architecture: $ARCH"
+    exit 1
 fi
 
 print_status "Downloading Wings"
@@ -120,13 +116,10 @@ print_status "Setting executable permissions"
 sudo chmod u+x /usr/local/bin/wings
 check_success "Permissions set" "Failed to set permissions"
 
-# ------------------------
 # 4. Wings service
-# ------------------------
 print_header "CONFIGURING WINGS SERVICE"
 print_status "Creating systemd service file"
-WINGS_SERVICE_FILE="/etc/systemd/system/wings.service"
-sudo tee $WINGS_SERVICE_FILE > /dev/null <<EOF
+sudo tee /etc/systemd/system/wings.service > /dev/null <<EOF
 [Unit]
 Description=Pterodactyl Wings Daemon
 After=docker.service
@@ -157,13 +150,11 @@ print_status "Enabling Wings service"
 sudo systemctl enable wings > /dev/null 2>&1
 check_success "Wings service enabled" "Failed to enable Wings service"
 
-# ------------------------
 # 5. SSL Certificate
-# ------------------------
 print_header "GENERATING SSL CERTIFICATE"
 print_status "Creating certificate directory"
 sudo mkdir -p /etc/certs/wing
-cd /etc/certs/wing || exit
+cd /etc/certs/wing
 
 print_status "Generating self-signed SSL certificate"
 sudo openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 \
@@ -171,32 +162,28 @@ sudo openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 \
   -keyout privkey.pem -out fullchain.pem > /dev/null 2>&1
 check_success "SSL certificate generated" "Failed to generate SSL certificate"
 
-# ------------------------
-# 6. 'wing' helper command
-# ------------------------
+# 6. wing helper command
 print_header "CREATING WING HELPER COMMAND"
 print_status "Installing helper script"
 sudo tee /usr/local/bin/wing > /dev/null <<'EOF'
 #!/bin/bash
-echo -e "\033[1;35m╔══════════════════════════════════════════╗\033[0m"
-echo -e "\033[1;35m║          Wings Helper Command            ║\033[0m"
-echo -e "\033[1;35m╚══════════════════════════════════════════╝\033[0m"
+echo -e "\033[0;95m╔══════════════════════════════════════════╗\033[0m"
+echo -e "\033[0;95m║          Wings Helper Command            ║\033[0m"
+echo -e "\033[0;95m╚══════════════════════════════════════════╝\033[0m"
 echo
-echo -e "\033[1;36mTo start Wings:\033[0m          \033[1;32msudo systemctl start wings\033[0m"
-echo -e "\033[1;36mCheck status:\033[0m           \033[1;32msudo systemctl status wings\033[0m"
-echo -e "\033[1;36mView live logs:\033[0m         \033[1;32msudo journalctl -u wings -f\033[0m"
+echo -e "\033[0;96mTo start Wings:\033[0m          \033[0;92msudo systemctl start wings\033[0m"
+echo -e "\033[0;96mCheck status:\033[0m           \033[0;92msudo systemctl status wings\033[0m"
+echo -e "\033[0;96mView live logs:\033[0m         \033[0;92msudo journalctl -u wings -f\033[0m"
 echo
-echo -e "\033[1;33m⚠️  Ensure port 8080 → 443 is mapped in your node config!\033[0m"
+echo -e "\033[1;93m⚠️  Ensure port 8080 → 443 is mapped in your node config!\033[0m"
 echo
-echo -e "\033[1;34mDiscord Support: https://discord.gg/your-discord-invite-link\033[0m"
+echo -e "\033[0;94mDiscord Support: https://discord.gg/your-discord-invite-link\033[0m"
 echo
 EOF
 sudo chmod +x /usr/local/bin/wing
 check_success "Helper command 'wing' created" "Failed to create helper"
 
-# ------------------------
-# Installation Complete Message
-# ------------------------
+# Installation complete
 print_header "INSTALLATION COMPLETED SUCCESSFULLY"
 echo -e "${GREEN}${BOLD}🎉 Pterodactyl Wings is now fully installed!${NC}\n"
 echo -e "${WHITE}${BOLD}📋 Next Steps:${NC}"
@@ -204,9 +191,7 @@ echo -e " ${CYAN}•${NC} Configure Wings using the auto-config option below or 
 echo -e " ${CYAN}•${NC} Start the service: ${GREEN}sudo systemctl start wings${NC}"
 echo -e " ${CYAN}•${NC} Quick help anytime: ${GREEN}wing${NC}\n"
 
-# ------------------------
-# 7. Optional Auto-configure Wings
-# ------------------------
+# 7. Auto-configure
 echo -e "${PURPLE}${BOLD}🔧 OPTIONAL: AUTO-CONFIGURE WINGS${NC}"
 read -p "$(echo -e "${YELLOW}Would you like to auto-configure Wings now? (y/N): ${NC}")" AUTO_CONFIG
 if [[ "$AUTO_CONFIG" =~ ^[Yy]$ ]]; then
