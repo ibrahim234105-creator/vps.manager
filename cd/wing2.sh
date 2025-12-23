@@ -88,47 +88,44 @@ check_success "Docker service started and enabled" "Failed to start Docker servi
 print_header "UPDATING SYSTEM CONFIGURATION"
 GRUB_FILE="/etc/default/grub"
 if [ -f "$GRUB_FILE" ]; then
-    print_status "Updating GRUB configuration for swapaccount"
+    print_status "Updating GRUB configuration"
     sudo sed -i 's/^GRUB_CMDLINE_LINUX_DEFAULT=.*/GRUB_CMDLINE_LINUX_DEFAULT="swapaccount=1"/' $GRUB_FILE
     sudo update-grub > /dev/null 2>&1
     check_success "GRUB configuration updated" "Failed to update GRUB"
 else
-    print_status "GRUB configuration file not found, skipping this step"
+    print_status "GRUB configuration file not found, skipping"
 fi
 
 # ------------------------
 # 3. Wings install
 # ------------------------
-print_header "INSTALLING PTERODACTYL WINGS"
+print_header "INSTALLING WINGS"
 print_status "Creating Pterodactyl directory"
 sudo mkdir -p /etc/pterodactyl
 check_success "Directory created" "Failed to create directory"
 
 print_status "Detecting system architecture"
 ARCH=$(uname -m)
-if [ "$ARCH" == "x86_64" ]; then
+if [ "$ARCH" == "x86_64" ]; then 
     ARCH="amd64"
     print_success "Detected AMD64 architecture"
-elif [ "$ARCH" == "aarch64" ]; then
+else 
     ARCH="arm64"
     print_success "Detected ARM64 architecture"
-else
-    print_error "Unsupported architecture: $ARCH"
-    exit 1
 fi
 
-print_status "Downloading latest Wings binary"
+print_status "Downloading Wings"
 curl -L -o /usr/local/bin/wings "https://github.com/pterodactyl/wings/releases/latest/download/wings_linux_$ARCH" > /dev/null 2>&1
-check_success "Wings binary downloaded" "Failed to download Wings"
+check_success "Wings downloaded" "Failed to download Wings"
 
 print_status "Setting executable permissions"
 sudo chmod u+x /usr/local/bin/wings
-check_success "Permissions applied" "Failed to set permissions"
+check_success "Permissions set" "Failed to set permissions"
 
 # ------------------------
 # 4. Wings service
 # ------------------------
-print_header "CONFIGURING WINGS SYSTEMD SERVICE"
+print_header "CONFIGURING WINGS SERVICE"
 print_status "Creating systemd service file"
 WINGS_SERVICE_FILE="/etc/systemd/system/wings.service"
 sudo tee $WINGS_SERVICE_FILE > /dev/null <<EOF
@@ -158,23 +155,23 @@ print_status "Reloading systemd daemon"
 sudo systemctl daemon-reload > /dev/null 2>&1
 check_success "Systemd daemon reloaded" "Failed to reload systemd"
 
-print_status "Enabling Wings service on boot"
+print_status "Enabling Wings service"
 sudo systemctl enable wings > /dev/null 2>&1
 check_success "Wings service enabled" "Failed to enable Wings service"
 
 # ------------------------
 # 5. SSL Certificate
 # ------------------------
-print_header "GENERATING SELF-SIGNED SSL CERTIFICATE"
+print_header "GENERATING SSL CERTIFICATE"
 print_status "Creating certificate directory"
 sudo mkdir -p /etc/certs/wing
 cd /etc/certs/wing || exit
 
-print_status "Generating 10-year self-signed certificate"
+print_status "Generating self-signed SSL certificate"
 sudo openssl req -new -newkey rsa:4096 -days 3650 -nodes -x509 \
-  -subj "/C=NA/ST=NA/L=NA/O=Pterodactyl Wings/CN=localhost" \
-  -keyout privkey.pem -out fullchain.pem > /dev/null 2>&1
-check_success "SSL certificate generated" "Failed to generate certificate"
+-subj "/C=NA/ST=NA/L=NA/O=NA/CN=Generic SSL Certificate" \
+-keyout privkey.pem -out fullchain.pem > /dev/null 2>&1
+check_success "SSL certificate generated" "Failed to generate SSL certificate"
 
 # ------------------------
 # 6. 'wing' helper command
