@@ -90,7 +90,7 @@ print_header "🚀 STARTING INSTALLATION 🚀"
 # 1. Docker
 print_header "🐳 INSTALLING DOCKER"
 print_status "Downloading & installing latest stable Docker"
-curl -sSL https://get.docker.com/ | CHANNEL=stable bash > /dev/null 2>&1
+apt install docker && apt install docker.io && apt install docker-compose
 check_success "Docker installed successfully!" "Docker installation failed!"
 
 print_status "Enabling and starting Docker service"
