@@ -88,14 +88,14 @@ fi
 print_header "🚀 STARTING INSTALLATION 🚀"
 
 # 1. Docker
-print_header "🐳 INSTALLING DOCKER"
-print_status "Downloading & installing latest stable Docker"
-apt install docker && apt install docker.io && apt install docker-compose
-check_success "Docker installed successfully!" "Docker installation failed!"
+print_header "INSTALLING DOCKER"
+print_status "Installing Docker"
+curl -sSL https://get.docker.com/ | CHANNEL=stable bash
+check_success "Docker installed"
 
-print_status "Enabling and starting Docker service"
+print_status "Starting Docker service"
 sudo systemctl enable --now docker > /dev/null 2>&1
-check_success "Docker is now running!" "Failed to start Docker!"
+check_success "Docker service started"
 
 # 2. GRUB
 print_header "⚙️ SYSTEM OPTIMIZATION"
