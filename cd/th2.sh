@@ -35,20 +35,18 @@ clear
 # Futuristic ASCII Header
 echo -e "${NEON_BLUE}"
 cat << "EOF"
- ___      ___       __       __    __   __     ___      ___ 
-|"  \    /"  |     /""\     /" |  | "\ |" \   |"  \    /"  |
- \   \  //   |    /    \   (:  (__)  :)||  |   \   \  //   |
- /\\  \/.    |   /' /\  \   \/      \/ |:  |   /\\  \/.    |
-|: \.        |  //  __'  \  //  __  \\ |.  |  |: \.        |
-|.  \    /:  | /   /  \\  \(:  (  )  :)/\  |\ |.  \    /:  |
-|___|\__/|___|(___/    \___)\__|  |__/(__\_|_)|___|\__/|___|
-                                                            
-                                     
+ ______        _   _               _____  _                 
+|  ____|      | | | |             |  __ \| |                
+| |__ ___  ___| |_| |__   ___ _ __| |__) | | __ _ _   _ ____
+|  __/ _ \/ _` | __| '_ \ / _ \ '__|  ___/| |/ _` | | | |_  /
+| | |  __/ (_| | |_| | | |  __/ |  | |    | | (_| | |_| |/ / 
+|_|  \___|\__,_|\__|_| |_|\___|_|  |_|    |_|\__,_|\__, /___|
+                                                   |___/                                                      
 EOF
 echo -e "${NEON_PURPLE}${BOLD}             NEXT GEN ULTRA EDITION - 2025${RESET}"
 echo -e "${GLOW}       Seamless • Fast • Future-Proof Automation${RESET}"
-echo -e "${DIM}      Original Creator: ${BOLD}MahimOp${RESET} ${DIM}| YouTube: @mahimxyz${RESET}"
-echo -e "${DIM}      Discord: https://discord.gg/zkDNdPpArS${RESET}"
+echo -e "${DIM}      Original Creator: ${BOLD}FeatherPlayz${RESET} ${DIM}| YouTube: @featherplayz01${RESET}"
+echo -e "${DIM}      Discord: https://discord.gg/N5MqeYrYMB${RESET}"
 echo -e "${NEON_BLUE}══════════════════════════════════════════════════════════${RESET}\n"
 
 # Status Functions
@@ -123,14 +121,13 @@ success "Nebula Blueprint executed successfully!"
 clear
 echo -e "${NEON_BLUE}"
 cat << "EOF"
- ___      ___       __       __    __   __     ___      ___ 
-|"  \    /"  |     /""\     /" |  | "\ |" \   |"  \    /"  |
- \   \  //   |    /    \   (:  (__)  :)||  |   \   \  //   |
- /\\  \/.    |   /' /\  \   \/      \/ |:  |   /\\  \/.    |
-|: \.        |  //  __'  \  //  __  \\ |.  |  |: \.        |
-|.  \    /:  | /   /  \\  \(:  (  )  :)/\  |\ |.  \    /:  |
-|___|\__/|___|(___/    \___)\__|  |__/(__\_|_)|___|\__/|___|
-                                                            
+ ______        _   _               _____  _                 
+|  ____|      | | | |             |  __ \| |                
+| |__ ___  ___| |_| |__   ___ _ __| |__) | | __ _ _   _ ____
+|  __/ _ \/ _` | __| '_ \ / _ \ '__|  ___/| |/ _` | | | |_  /
+| | |  __/ (_| | |_| | | |  __/ |  | |    | | (_| | |_| |/ / 
+|_|  \___|\__,_|\__|_| |_|\___|_|  |_|    |_|\__,_|\__, /___|
+                                                   |___/                                                       
 EOF
 echo -e "${NEON_PURPLE}${BOLD}       ✨ NEBULA INSTALLATION COMPLETE ✨${RESET}\n"
 
@@ -140,15 +137,15 @@ echo -e "${GLOW}${BOLD}╚══════════════════
 
 echo -e "${YELLOW}${BOLD}🚀 Next Steps:${RESET}"
 echo -e "   ${NEON_GREEN}•${RESET} Clear cache: ${BOLD}php artisan view:clear && php artisan config:clear${RESET}"
-echo -e "   ${NEON_GREEN}•${RESET} Restart queue: ${BOLD}php artisan queue:restart${RESET}"
+echo -e "   ${NEON_GREEN}•${RESET} restart queue: ${BOLD}php artisan queue:restart${RESET}"
 echo -e "   ${NEON_GREEN}•${RESET} Refresh panel in browser (Ctrl+Shift+R for hard refresh)"
 echo -e "   ${NEON_GREEN}•${RESET} Enjoy the stunning Nebula theme!${RESET}\n"
 
 warning "Always backup your panel before installing extensions!"
 
-echo -e "${NEON_GREEN}${BOLD}Original Credits: MahimOp${RESET}"
-echo -e "${DIM}YouTube: https://www.youtube.com/@mahimxyz${RESET}"
-echo -e "${DIM}Discord: https://discord.gg/zkDNdPpArS${RESET}\n"
+echo -e "${NEON_GREEN}${BOLD}Original Credits: FeatherPlayz${RESET}"
+echo -e "${DIM}YouTube: https://www.youtube.com/@featherplayz01${RESET}"
+echo -e "${DIM}Discord: https://discord.gg/N5MqeYrYMB${RESET}\n"
 
 echo -e "${GLOW}${BOLD}Your Pterodactyl Panel now shines with Nebula! 🌌✨${RESET}"
 echo -e "\n${YELLOW}Press Enter to exit...${RESET}"
