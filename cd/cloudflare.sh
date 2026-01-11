@@ -22,9 +22,9 @@ NC="\033[0m" # No Color
 # Fancy header
 echo -e "${BLUE}${BOLD}╔══════════════════════════════════════════════════════════╗${NC}"
 echo -e "${BLUE}${BOLD}║          Cloudflared Installation Script                 ║${NC}"
-echo -e "${BLUE}${BOLD}║              Made by MahimOp                             ║${NC}"
-echo -e "${BLUE}${BOLD}║    YouTube: youtube.com/@mahimxyz                        ║${NC}"
-echo -e "${BLUE}${BOLD}║    Discord: discord.gg/EHBvzYbh57                        ║${NC}"
+echo -e "${BLUE}${BOLD}║              Made by FeatherPlayz                        ║${NC}"
+echo -e "${BLUE}${BOLD}║    YouTube: youtube.com/@featherplayz01                  ║${NC}"
+echo -e "${BLUE}${BOLD}║    Discord: https://discord.gg/N5MqeYrYMB                ║${NC}"
 echo -e "${BLUE}${BOLD}╚══════════════════════════════════════════════════════════╝${NC}"
 echo -e "${MAGENTA}${BOLD}[*] Starting installation process...${NC}\n"
 
@@ -78,5 +78,5 @@ else
 fi
 
 echo -e "\n${MAGENTA}${BOLD}[*] All done! Run 'cloudflared' to get started.${NC}"
-echo -e "${MAGENTA}${BOLD}    Thanks for using this script by MahimOp!${NC}"
+echo -e "${MAGENTA}${BOLD}    Thanks for using this script by FeatherPlayz!${NC}"
 echo -e "${BLUE}${BOLD}════════════════════════════════════════════════════════════${NC}"
