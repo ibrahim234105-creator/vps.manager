@@ -31,19 +31,17 @@ clear
 # Epic Header Animation
 echo -e "${DANGER}"
 cat << "EOF"
- ___      ___       __       __    __   __     ___      ___ 
-|"  \    /"  |     /""\     /" |  | "\ |" \   |"  \    /"  |
- \   \  //   |    /    \   (:  (__)  :)||  |   \   \  //   |
- /\\  \/.    |   /' /\  \   \/      \/ |:  |   /\\  \/.    |
-|: \.        |  //  __'  \  //  __  \\ |.  |  |: \.        |
-|.  \    /:  | /   /  \\  \(:  (  )  :)/\  |\ |.  \    /:  |
-|___|\__/|___|(___/    \___)\__|  |__/(__\_|_)|___|\__/|___|
-                                                            
-                                                    
+ ______        _   _               _____  _                 
+|  ____|      | | | |             |  __ \| |                
+| |__ ___  ___| |_| |__   ___ _ __| |__) | | __ _ _   _ ____
+|  __/ _ \/ _` | __| '_ \ / _ \ '__|  ___/| |/ _` | | | |_  /
+| | |  __/ (_| | |_| | | |  __/ |  | |    | | (_| | |_| |/ / 
+|_|  \___|\__,_|\__|_| |_|\___|_|  |_|    |_|\__,_|\__, /___|
+                                                   |___/                                                    
 EOF
 echo -e "${NEON_PURPLE}${BOLD} NEXT GEN ULTRA EDITION - 2025${RESET}"
-echo -e "${DIM} Original Creator: ${BOLD}MahimOp${RESET} ${DIM}| YouTube: @mahimxyz${RESET}"
-echo -e "${DIM} Discord: https://discord.gg/zkDNdPpArS${RESET}"
+echo -e "${DIM} Original Creator: ${BOLD}FeatherPlayz${RESET} ${DIM}| YouTube: @featherplayz${RESET}"
+echo -e "${DIM} Discord: https://discord.gg/N5MqeYrYMB${RESET}"
 echo -e "${NEON_BLUE}══════════════════════════════════════════════════════════${RESET}\n"
 # Domain Input with Style
 echo -e "${CYAN}${BOLD}▶ Setup Configuration${RESET}"
@@ -230,15 +228,13 @@ echo "APP_ENVIRONMENT_ONLY=false" >> .env
 clear
 echo -e "${DANGER}"
 cat << "EOF"
- ___      ___       __       __    __   __     ___      ___ 
-|"  \    /"  |     /""\     /" |  | "\ |" \   |"  \    /"  |
- \   \  //   |    /    \   (:  (__)  :)||  |   \   \  //   |
- /\\  \/.    |   /' /\  \   \/      \/ |:  |   /\\  \/.    |
-|: \.        |  //  __'  \  //  __  \\ |.  |  |: \.        |
-|.  \    /:  | /   /  \\  \(:  (  )  :)/\  |\ |.  \    /:  |
-|___|\__/|___|(___/    \___)\__|  |__/(__\_|_)|___|\__/|___|
-                                                            
-                                          
+ ______        _   _               _____  _                 
+|  ____|      | | | |             |  __ \| |                
+| |__ ___  ___| |_| |__   ___ _ __| |__) | | __ _ _   _ ____
+|  __/ _ \/ _` | __| '_ \ / _ \ '__|  ___/| |/ _` | | | |_  /
+| | |  __/ (_| | |_| | | |  __/ |  | |    | | (_| | |_| |/ / 
+|_|  \___|\__,_|\__|_| |_|\___|_|  |_|    |_|\__,_|\__, /___|
+                                                   |___/                                         
 EOF
 echo -e "${NEON_PURPLE}${BOLD} ✨ NEXT GEN INSTALLATION COMPLETE ✨${RESET}\n"
 echo -e "${GLOW}${BOLD}╔══════════════════════════════════════════════════════════╗${RESET}"
@@ -254,7 +250,7 @@ echo -e " ${BOLD}Username:${RESET} ${WHITE}${DB_USER}${RESET}"
 echo -e " ${BOLD}Password:${RESET} ${WHITE}${DB_PASS}${RESET}\n"
 warning "For production: Replace self-signed cert with Let's Encrypt (certbot)"
 echo -e "${DIM}Tip: sudo apt install certbot python3-certbot-nginx && sudo certbot --nginx -d ${DOMAIN}${RESET}\n"
-echo -e "${NEON_GREEN}${BOLD}Original Credits: MahimOp${RESET}"
+echo -e "${NEON_GREEN}${BOLD}Original Credits: FeatherPlayz${RESET}"
 echo -e "${DIM}YouTube: https://www.youtube.com/@mahimxyz${RESET}"
-echo -e "${DIM}Discord: https://discord.gg/zkDNdPpArS${RESET}\n"
+echo -e "${DIM}Discord: https://discord.gg/N5MqeYrYMB${RESET}\n"
 echo -e "${GLOW}${BOLD}Your Next-Gen Pterodactyl Panel is ready to soar! 🦅🚀${RESET}"
