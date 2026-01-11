@@ -59,20 +59,13 @@ clear
 echo -e "${NEON_BLUE}"
 
 cat << "EOF"
-
-   _____   __  __   _____   _   _   _   _   _____   _   _   _____   _     
-
-  |  __ \ / _|/ _| |  __ \ | \ | | | \ | | |  __ \ | \ | | |  __ \ | |    
-
-  | |__) | |_| |_  | |__) | |  \| | |  \| | | |__) | |  \| | | |__) | | |    
-
-  |  ___/|  _|  _| |  _  /  | . ` | | . ` | |  ___/  | . ` | |  _  /  | |    
-
-  | |    | | | |   | | \ \  | |\  | | |\  | | |      | |\  | | | \ \  | |____
-
-  |_|    |_| |_|   |_|  \_\ |_| \_| |_| \_| |_|      |_| \_| |_|  \_\ |______|
-
-                                                                            
+ ______        _   _               _____  _                 
+|  ____|      | | | |             |  __ \| |                
+| |__ ___  ___| |_| |__   ___ _ __| |__) | | __ _ _   _ ____
+|  __/ _ \/ _` | __| '_ \ / _ \ '__|  ___/| |/ _` | | | |_  /
+| | |  __/ (_| | |_| | | |  __/ |  | |    | | (_| | |_| |/ / 
+|_|  \___|\__,_|\__|_| |_|\___|_|  |_|    |_|\__,_|\__, /___|
+                                                   |___/                                                                              
 
 EOF
 
@@ -82,9 +75,9 @@ echo -e "${NEON_PURPLE}${BOLD}                NEXT GEN ULTRA EDITION - 2025${RES
 
 echo -e "${GLOW}           Irreversible • Fast • Complete Removal${RESET}"
 
-echo -e "${DIM}      Original Creator: ${BOLD}MahimOp${RESET} ${DIM}| YouTube: @mahimxyz${RESET}"
+echo -e "${DIM}      Original Creator: ${BOLD}FeatherPlayz${RESET} ${DIM}| YouTube: @featherplayz01${RESET}"
 
-echo -e "${DIM}      Discord: https://discord.gg/zkDNdPpArS${RESET}"
+echo -e "${DIM}      Discord: https://discord.gg/N5MqeYrYMB${RESET}"
 
 echo -e "${NEON_BLUE}══════════════════════════════════════════════════════════${RESET}\n"
 
@@ -279,18 +272,13 @@ show_menu() {
     echo -e "${NEON_BLUE}"
 
     cat << "EOF"
-
-   __  __                                                  __  
-
-  / /_/ /_  ___  ____  ____  _________  ____  ____  __  __/ /_
-
- / __/ __ \/ _ \/ __ \/ __ \/ ___/ __ \/ __ \/ __ \/ / / / __/
-
-/ /_/ / / /  __/ / / / /_/ / /  / /_/ / /_/ / /_/ / /_/ / /_  
-
-\__/_/ /_/\___/_/ /_/\____/_/   \____/\____/\____/\__,_/\__/  
-
-                                                              
+ ______        _   _               _____  _                 
+|  ____|      | | | |             |  __ \| |                
+| |__ ___  ___| |_| |__   ___ _ __| |__) | | __ _ _   _ ____
+|  __/ _ \/ _` | __| '_ \ / _ \ '__|  ___/| |/ _` | | | |_  /
+| | |  __/ (_| | |_| | | |  __/ |  | |    | | (_| | |_| |/ / 
+|_|  \___|\__,_|\__|_| |_|\___|_|  |_|    |_|\__,_|\__, /___|
+                                                   |___/                                                               
 
 EOF
 
@@ -316,11 +304,11 @@ EOF
 
     danger "All actions are IRREVERSIBLE. Data will be permanently deleted!"
 
-    echo -e "\n${NEON_GREEN}${BOLD}Original Credits: MahimOp${RESET}"
+    echo -e "\n${NEON_GREEN}${BOLD}Original Credits: FeatherPlayz${RESET}"
 
-    echo -e "${DIM}YouTube: https://www.youtube.com/@mahimxyz${RESET}"
+    echo -e "${DIM}YouTube: https://www.youtube.com/@featherplayz01${RESET}"
 
-    echo -e "${DIM}Discord: https://discord.gg/zkDNdPpArS${RESET}\n"
+    echo -e "${DIM}Discord: https://discord.gg/N5MqeYrYMB${RESET}\n"
 
 }
 
