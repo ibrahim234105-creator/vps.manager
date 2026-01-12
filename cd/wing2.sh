@@ -72,13 +72,13 @@ echo -e "${B_BLUE}
 ║   ${B_PURPLE}╚═╝        ╚═╝   ╚══════╝╚═╝  ╚═╝╚═╝  ╚═╝ ╚═════╝   ╚═╝      ${B_BLUE}║
 ║                                                              ║
 ║            ${B_WHITE}${BOLD}PTERODACTYL WINGS SETUP SCRIPT${B_BLUE}            ║
-║                   ${B_CYAN}${BOLD}Powered by MahimOp${B_BLUE}                   ║
+║                   ${B_CYAN}${BOLD}Powered by FeatherPlayz{B_BLUE}              ║
 ║                                                              ║
 ╚══════════════════════════════════════════════════════════════╝${NC}
 "
 
-echo -e "      ${B_CYAN}${BOLD}✨ Script created & maintained by MahimOp ✨${NC}"
-echo -e "      ${B_PURPLE}${BOLD}📩 Discord Support: https://discord.gg/EHBvzYbh57${NC}\n"
+echo -e "      ${B_CYAN}${BOLD}✨ Script created & maintained by FeatherPlayz ✨${NC}"
+echo -e "      ${B_PURPLE}${BOLD}📩 Discord Support: https://discord.gg/pKUvGnGEGt${NC}\n"
 
 if [ "$EUID" -ne 0 ]; then
     print_error "This script must be run as root! Use sudo."
